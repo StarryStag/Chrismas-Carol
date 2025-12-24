@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namamasko Po!</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            /* Deep Christmas Red Background */
+            background: radial-gradient(circle at center, #d40000 0%, #4a0000 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- SNOW EFFECT --- */
+        #snow-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -50px;
+            color: #fff;
+            text-shadow: 0 0 2px #000;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* --- CARD STYLING --- */
+        .christmas-card {
+            background-color: rgba(180, 0, 0, 0.3) !important;
+            backdrop-filter: blur(12px);
+            border: 3px solid #ffd700 !important;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.4) !important;
+            border-radius: 25px !important;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- CHRISTMAS LIGHTS DECORATION --- */
+        .lights-strand {
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 20;
+            padding: 0 10px;
+        }
+
+        .bulb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            animation: blink 1.5s infinite alternate;
+            box-shadow: 0 2px 10px rgba(255,255,255,0.8);
+        }
+
+        .bulb:nth-child(4n+1) { background: #ff0000; animation-delay: 0s; }
+        .bulb:nth-child(4n+2) { background: #ffd700; animation-delay: 0.5s; }
+        .bulb:nth-child(4n+3) { background: #00ff00; animation-delay: 1s; }
+        .bulb:nth-child(4n+4) { background: #0000ff; animation-delay: 1.5s; }
+
+        @keyframes blink {
+            0% { opacity: 0.4; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 15px currentColor; }
+        }
+
+        /* --- PAROL ANIMATION --- */
+        .parol-effect {
+            font-size: 3.5rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 15px gold);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px gold); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 25px #ffeb3b); }
+        }
+
+        /* --- FONTS & BUTTONS --- */
+        .font-christmas {
+            font-family: 'Mountains of Christmas', cursive;
+            color: #ffd700;
+            text-shadow: 2px 2px 0px #8b0000;
+        }
+
+        .btn-christmas {
+            background-color: #0f5132;
+            color: white;
+            font-weight: bold;
+            border: 2px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+        .btn-christmas:hover {
+            background-color: #198754;
+            border-color: white;
+            color: white;
+            box-shadow: 0 0 15px #ffd700;
+            transform: translateY(-2px);
+        }
+        
+        .message-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center py-5">
+
+    <div id="snow-container"></div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-5">
+                
+                <div class="card christmas-card p-4 text-center">
+                    
+                    <div class="lights-strand">
+                        <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+                        <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+                        <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+                    </div>
+
+                    <div class="mb-1 mt-2">
+                        <span class="parol-effect">🌟</span>
+                    </div>
+
+                    <h1 class="font-christmas display-4 fw-bold mb-4">Namamasko Po!</h1>
+
+                    <div class="ratio ratio-16x9 mb-4 border border-3 border-warning rounded-3 shadow-lg">
+                        <iframe 
+                            src="https://www.youtube.com/embed/cpWbp9EX1io?si=K0g2Wdm44S_fpwOr&amp;start=5&autoplay=1&mute=1" 
+                            title="YouTube video" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <div class="message-box mb-4">
+                        <p class="fs-5 fst-italic text-light m-0">"Tap the video to hear the song!" 🔊</p>
+                    </div>
+
+                    <div class="bg-white p-2 rounded-4 d-inline-block shadow mb-3 border border-4 border-success">
+                        <img src="gcash-qr.jpg" alt="GCash QR" class="img-fluid rounded-3" style="max-width: 200px;">
+                    </div>
+
+                    <div class="mt-2">
+                        <small class="d-block mb-1 text-white-50">Or send manually to:</small>
+                        <h4 class="fw-bold text-white letter-spacing-1">0999-744-3149</h4>
+                        
+                        <button class="btn btn-christmas rounded-pill px-5 py-2 mt-2 shadow" onclick="copyNumber()">
+                            🎁 Copy Number
+                        </button>
+                    </div>
+
+                    <p class="font-christmas fs-3 mt-4 mb-0 text-warning">Merry Christmas & Happy New Year!</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function createSnow() {
+            const container = document.getElementById('snow-container');
+            const flakeCount = 100; 
+
+            for (let i = 0; i < flakeCount; i++) {
+                const flake = document.createElement('div');
+                flake.className = 'snowflake';
+                flake.innerHTML = '❄';
+                
+                flake.style.left = Math.random() * 100 + 'vw';
+                flake.style.animationDuration = Math.random() * 5 + 3 + 's'; 
+                flake.style.opacity = Math.random();
+                flake.style.fontSize = Math.random() * 15 + 10 + 'px';
+                flake.style.animationDelay = Math.random() * 5 + 's';
+                
+                container.appendChild(flake);
+            }
+        }
+
+        function copyNumber() {
+            const myNumber = "09997443149"; 
+            navigator.clipboard.writeText(myNumber).then(() => {
+                alert("Number copied! 🎄\nOpen GCash na! 😉");
+            });
+        }
+
+        createSnow();
+    </script>
+</body>
+</html>
