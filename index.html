@@ -160,10 +160,33 @@
         @keyframes fall { to { transform: translateY(110vh); } }
 
         .lights-strand { position: absolute; top: -15px; width: 100%; text-align: center; white-space: nowrap; overflow: hidden; z-index: 2; pointer-events: none; }
-        .light { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin: 0 15px; animation: flash 1s infinite alternate; }
-        .light:nth-child(odd) { background: #f00; box-shadow: 0 0 10px #f00; animation-delay: 0s; }
-        .light:nth-child(even) { background: #0f0; box-shadow: 0 0 10px #0f0; animation-delay: 0.5s; }
-        @keyframes flash { from { opacity: 0.5; } to { opacity: 1; transform: scale(1.2); } }
+        
+        /* UPDATED LIGHTS CSS HERE */
+        .light { 
+            display: inline-block; 
+            width: 18px; /* Increased from 12px */
+            height: 18px; /* Increased from 12px */
+            border-radius: 50%; 
+            margin: 0 15px; 
+            animation: flash 1s infinite alternate; 
+        }
+        
+        .light:nth-child(odd) { 
+            background: #ff0000; 
+            box-shadow: 0 0 20px #ff0000; /* Increased glow from 10px to 20px */
+            animation-delay: 0s; 
+        }
+        
+        .light:nth-child(even) { 
+            background: #00ff00; 
+            box-shadow: 0 0 20px #00ff00; /* Increased glow from 10px to 20px */
+            animation-delay: 0.5s; 
+        }
+        
+        @keyframes flash { 
+            from { opacity: 0.6; } /* Minimum brightness increased */
+            to { opacity: 1; transform: scale(1.4); } /* Scale increased to 1.4 */
+        }
 
         /* --- BUTTON --- */
         .btn-christmas {
