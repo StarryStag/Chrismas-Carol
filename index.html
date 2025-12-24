@@ -15,20 +15,19 @@
     <style>
         body {
             /* Secret Weapon #2: Cozy Plaid/Tartan Pattern Background */
-            background-color: #4a0404;
+            background-color: #2c0202; 
             background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,0.05) 35px, rgba(255,255,255,0.05) 70px),
-                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(0,100,0,0.1) 35px, rgba(0,100,0,0.1) 70px);
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,0.03) 35px, rgba(255,255,255,0.03) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(0,100,0,0.05) 35px, rgba(0,100,0,0.05) 70px);
             color: white;
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
-            /* Fallback cursor if they don't like the magic one, but we hide it below */
             cursor: default; 
+            position: relative;
         }
 
         /* --- MAGIC CURSOR --- */
-        /* Only show magic cursor on desktop to avoid confusion on mobile touch */
         @media (pointer: fine) {
             body { cursor: none; }
             #cursor {
@@ -53,12 +52,24 @@
             100% { transform: translateY(50px) scale(0); opacity: 0; }
         }
 
+        /* --- TWINKLING STARS --- */
+        .star {
+            position: fixed; background: white; border-radius: 50%; z-index: 0; opacity: 0;
+            animation: twinkle ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); box-shadow: 0 0 2px rgba(255,255,255,0.3); }
+            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px white; }
+            100% { opacity: 0.2; transform: scale(0.8); box-shadow: 0 0 2px rgba(255,255,255,0.3); }
+        }
+
         /* --- CARD STYLING --- */
         .christmas-card {
-            background-color: rgba(255, 255, 255, 0.15); 
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255,255,255,0.4);
-            border-top: 15px solid rgba(255,255,255, 0.95); /* Snow cap */
+            background-color: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-top: 15px solid rgba(255,255,255, 0.9); /* Snow cap */
             border-radius: 25px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             z-index: 10;
@@ -66,17 +77,17 @@
             margin-top: 40px;
         }
 
-        /* --- WRAPPING PAPER REVEAL (UPDATED SIZE) --- */
+        /* --- WRAPPING PAPER REVEAL --- */
         .gift-wrapper {
             position: relative;
-            /* INCREASED SIZE FOR SCANNING */
-            width: 280px; 
-            height: 280px;
-            max-width: 100%;
-            margin: 0 auto;
+            width: 280px; height: 280px;
+            max-width: 100%; margin: 0 auto;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.1s; /* Faster transition for clicking feel */
         }
+        
+        /* Make the gift/QR pulse when clicked for tactile feedback */
+        .gift-wrapper:active { transform: scale(0.95) !important; }
         .gift-wrapper:hover { transform: scale(1.02); }
         
         .wrapping-paper {
@@ -97,14 +108,13 @@
         }
 
         .qr-hidden {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             border-radius: 15px;
-            /* CRITICAL FIX: Ensure entire QR is visible */
             object-fit: contain; 
-            /* CRITICAL FIX: White background for contrast */
             background-color: white; 
             padding: 10px;
+            /* Ensure the image doesn't block clicks to the wrapper div */
+            pointer-events: none; 
         }
 
         .unwrap-text {
@@ -116,20 +126,24 @@
             border: 1px solid gold;
         }
 
-        /* Classes for the reveal animation */
         .wrapping-paper.open {
             transform: scale(1.5) rotate(10deg);
             opacity: 0;
             pointer-events: none;
         }
 
-        /* --- TEXT & DECOR --- */
-        .candy-text {
+        /* --- GLOWING TEXT --- */
+        .glowing-text {
             font-family: 'Mountains of Christmas', cursive;
             font-weight: 700;
-            background: repeating-linear-gradient(45deg, #fff, #fff 10px, #ff9999 10px, #ff9999 20px);
-            background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.8));
+            color: #fff;
+            animation: christmas-lights 2s infinite alternate; 
+        }
+
+        @keyframes christmas-lights {
+            0% { text-shadow: 0 0 5px #fff, 0 0 10px #ff0000, 0 0 20px #ff0000; color: #ffeaea; }
+            50% { text-shadow: 0 0 5px #fff, 0 0 10px #00ff00, 0 0 20px #00ff00; color: #eaffea; }
+            100% { text-shadow: 0 0 5px #fff, 0 0 10px #ffd700, 0 0 20px #ffd700; color: #ffffe0; }
         }
 
         .santa-hat {
@@ -141,18 +155,12 @@
         @keyframes wiggle { 0%, 100% { transform: rotate(-15deg); } 50% { transform: rotate(-5deg); } }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        /* --- SNOW --- */
+        /* --- SNOW & LIGHTS --- */
         .snowflake { position: fixed; top: -20px; color: white; animation: fall linear infinite; pointer-events: none; z-index: 1; }
         @keyframes fall { to { transform: translateY(110vh); } }
 
-        /* --- LIGHTS --- */
-        .lights-strand {
-            position: absolute; top: -15px; width: 100%; text-align: center; white-space: nowrap; overflow: hidden; z-index: 2; pointer-events: none;
-        }
-        .light {
-            display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin: 0 15px;
-            animation: flash 1s infinite alternate;
-        }
+        .lights-strand { position: absolute; top: -15px; width: 100%; text-align: center; white-space: nowrap; overflow: hidden; z-index: 2; pointer-events: none; }
+        .light { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin: 0 15px; animation: flash 1s infinite alternate; }
         .light:nth-child(odd) { background: #f00; box-shadow: 0 0 10px #f00; animation-delay: 0s; }
         .light:nth-child(even) { background: #0f0; box-shadow: 0 0 10px #0f0; animation-delay: 0.5s; }
         @keyframes flash { from { opacity: 0.5; } to { opacity: 1; transform: scale(1.2); } }
@@ -162,6 +170,7 @@
             background: linear-gradient(to bottom, #0f5132, #052c1a);
             border: 2px solid #ffd700; color: white; font-weight: bold;
             box-shadow: 0 4px 0 #021a0f;
+            transition: transform 0.1s;
         }
         .btn-christmas:active { transform: translateY(4px); box-shadow: none; }
 
@@ -170,7 +179,8 @@
 <body class="d-flex align-items-center justify-content-center py-5">
 
     <div id="cursor"></div>
-
+    <div id="star-container"></div>
+    
     <div class="lights-strand">
         <div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div>
         <div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div>
@@ -187,20 +197,21 @@
                     
                     <div class="santa-hat">🎅</div>
 
-                    <h1 class="candy-text display-4 mb-4 mt-3">Namamasko Po!</h1>
+                    <h1 class="glowing-text display-4 mb-4 mt-3">Namamasko Po!</h1>
 
                     <div class="ratio ratio-16x9 mb-4 border border-3 border-white rounded-3 shadow">
-                        <iframe 
-                            src="https://www.youtube.com/embed/cpWbp9EX1io?si=K0g2Wdm44S_fpwOr&amp;start=5&autoplay=1&mute=1" 
-                            title="YouTube video" 
+                        <iframe width="560" height="315" 
+                            src="https://www.youtube.com/embed/XO9GiPOLd3I?si=5XmXuBY3myDEsEsC&amp;start=8" title="YouTube video player" 
+                            frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" 
                             allowfullscreen>
                         </iframe>
                     </div>
 
-                    <p class="text-white fst-italic mb-3">👇 Tap the gift to unwrap! 👇</p>
+                    <p class="text-white fst-italic mb-3">👇 Tap for Confetti! 👇</p>
 
-                    <div class="gift-wrapper mb-4" onclick="unwrapGift()">
+                    <div class="gift-wrapper mb-4" onclick="handleGiftClick()">
                         <div class="wrapping-paper" id="paper">
                             <div class="bow">🎁</div>
                             <span class="unwrap-text">Open Me!</span>
@@ -230,47 +241,52 @@
 
     <script>
         // --- 1. MAGIC DUST CURSOR ---
-        // Only run on non-touch devices to prevent errors
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursor = document.getElementById('cursor');
             document.addEventListener('mousemove', (e) => {
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';
-
                 const dust = document.createElement('div');
                 dust.classList.add('magic-dust');
                 dust.style.left = e.clientX + 'px';
                 dust.style.top = e.clientY + 'px';
-                
                 const size = Math.random() * 5 + 3;
                 dust.style.width = size + 'px';
                 dust.style.height = size + 'px';
-
                 document.body.appendChild(dust);
                 setTimeout(() => { dust.remove(); }, 1000);
             });
         }
 
-        // --- 2. GIFT UNWRAPPING & CONFETTI ---
-        function unwrapGift() {
+        // --- 2. GIFT CLICK HANDLER (UNWRAP + REPEATED CONFETTI) ---
+        function handleGiftClick() {
             const paper = document.getElementById('paper');
+            
+            // ALWAYS trigger confetti, even if already open!
+            triggerConfetti();
+
+            // Only animate the paper opening if it hasn't happened yet
             if (!paper.classList.contains('open')) {
                 paper.classList.add('open');
-                triggerConfetti();
             }
         }
 
-        // --- 3. COPY NUMBER & CONFETTI ---
+        // --- 3. COPY NUMBER (INSTANT CONFETTI) ---
         function copyNumber() {
+            // Trigger confetti IMMEDIATELY for satisfaction
+            triggerConfetti();
+
             const myNumber = "09997443149"; 
             navigator.clipboard.writeText(myNumber).then(() => {
-                triggerConfetti(); 
-                alert("Number copied! 🎄\n\nThank you for the Aguinaldo! 😉");
+                // Short delay so the confetti happens before the alert stops the UI
+                setTimeout(() => {
+                    alert("Number copied! 🎄\n\nThank you for the Aguinaldo! 😉");
+                }, 100);
             });
         }
 
         function triggerConfetti() {
-            var duration = 2 * 1000;
+            var duration = 1.5 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
 
@@ -285,11 +301,10 @@
             }, 250);
         }
 
-        // --- 4. SIMPLE SNOW ---
+        // --- 4. SNOW & STARS SETUP ---
         function createSnow() {
             const container = document.getElementById('snow-container');
-            const flakeCount = 50; 
-            for (let i = 0; i < flakeCount; i++) {
+            for (let i = 0; i < 50; i++) {
                 const flake = document.createElement('div');
                 flake.className = 'snowflake';
                 flake.innerHTML = ['❄', '❅', '❆'][Math.floor(Math.random()*3)];
@@ -301,7 +316,25 @@
                 container.appendChild(flake);
             }
         }
+
+        function createStars() {
+            const container = document.getElementById('star-container');
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                const size = Math.random() * 3 + 1 + 'px';
+                star.style.width = size;
+                star.style.height = size;
+                star.style.animationDuration = (Math.random() * 3 + 1) + 's';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
         createSnow();
+        createStars();
     </script>
 </body>
 </html>
